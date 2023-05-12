@@ -1,0 +1,22 @@
+version: "3.9"
+
+services:
+  db_postgres:
+    image: postgres:latest
+    container_name: db_postgres
+    ports:
+      - "5432:5432"
+
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: QL78csdbcs7
+      POSTGRES_DB: database_internet_magaz
+  api:
+    build:
+      dockerfile:
+        app_web/configs/Dockerfile
+    ports:
+      - "1122:1122"
+    links:
+      - db_postgres:db_postgres
