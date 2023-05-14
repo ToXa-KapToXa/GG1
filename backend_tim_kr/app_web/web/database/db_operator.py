@@ -32,13 +32,13 @@ class DBOperator:
         self.logger.debug("New user in DB")
         return True
 
-    def auth(self, email, password) -> bool:
+    def auth(self, email, password):
         session = create_session()
         some_user = session.query(User).filter(User.email == email, User.password == password).first()
         if some_user is not None:
             self.logger.debug("Success auth")
-            return True
-        return False
+            return True, some_user.id
+        return False, None
 
     def product(self):
         session = create_session()

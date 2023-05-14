@@ -19,7 +19,7 @@ def global_init(logger: logging.Logger,
     if __factory:
         return
 
-    conn_str = f'postgresql+psycopg2://{db_login}:{db_password}@{db_host}:{db_port}/database_internet_magaz'
+    conn_str = f'postgresql+psycopg2://{db_login}:{db_password}@{db_host}:{db_port}/gg1_db'
     logger.info(f"Connecting to the database...")
 
     engine = sa.create_engine(conn_str, echo=False)

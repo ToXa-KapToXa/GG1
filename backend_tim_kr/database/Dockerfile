@@ -1,4 +1,0 @@
-FROM postgres:latest
-ENV POSTGRES_PASSWORD=QL78csdbcs7
-ENV POSTGRES_USER=admin
-ENV POSTGRES_DB=database

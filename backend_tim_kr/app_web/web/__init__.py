@@ -1,11 +1,12 @@
-import logging
 from flask import Flask, make_response, jsonify
 from flask_cors import CORS
 
 from .database.db_operator import DBOperator
+from .handlers.user_operator import UserOperator
 
 logger = None
 db_operator = None
+user_admin = None
 
 
 def create_api(flask_log: bool,
@@ -21,6 +22,7 @@ def create_api(flask_log: bool,
     Функция отвечает за создание различных обработчиков, таких как:
         - logger: Обработчик логирования
         - db_operator: Обработчик базы данных
+        - user_admin: Обработчик авторизаций
 
     Arguments:
         flask_log (bool): Если True, то встроенное логирование Flask будет
@@ -35,7 +37,7 @@ def create_api(flask_log: bool,
     Returns:
          Flask: Объект класса, который необходим для создания приложения.
     """
-    global logger, db_operator
+    global logger, db_operator, user_admin
 
     app = Flask(__name__)
     CORS(app)
@@ -55,6 +57,11 @@ def create_api(flask_log: bool,
         db_port=db_port,
         db_login=db_login,
         db_password=db_password,
+    )
+
+    # Инициализация обработчика авторизаций
+    user_admin = UserOperator(
+        logger=logger
     )
 
     from . import endpoint_api_controllers as api_control

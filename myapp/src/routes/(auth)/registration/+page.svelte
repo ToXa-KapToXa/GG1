@@ -4,8 +4,6 @@
     let second_password = ""
     export let result = null
     async function registration () {
-        console.log(email)
-        console.log(password)
 		const res = await fetch('http://localhost:1122/api/registration/', {
 			method: 'POST',
             headers: {
@@ -20,9 +18,7 @@
 		})
 		
 		const json = await res.json()
-        console.log(json)
         result = json['response_code']
-        console.log(result)
 	}
 </script>
 
