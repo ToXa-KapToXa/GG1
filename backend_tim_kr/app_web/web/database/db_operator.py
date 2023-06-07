@@ -165,6 +165,7 @@ class DBOperator:
         for i in list_bucket:
             product = session.query(Product).filter(Product.id == i.product_id).first()
             response_json['bucket'].append({
+                "product_id": product.id,
                 "name": product.name,
                 "price": product.price,
                 "category": product.category,
