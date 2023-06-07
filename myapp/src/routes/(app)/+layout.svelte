@@ -1,5 +1,61 @@
 <script>
-	
+    import { onMount } from "svelte";
+
+	const urlAuth = "https://gg1-back.onrender.com/api/check/22";
+	export let code_response;
+    let user_session = "22";
+    export let user_id;
+
+    onMount(async function () {
+        const isAuth = await fetch(urlAuth);
+        const dataAuth = await isAuth.json();
+        console.log(dataAuth);
+        code_response = dataAuth["response_code"];
+        user_id = dataAuth["data"];
+    });
+
+  async function logout () {
+        const res = await fetch('https://gg1-back.onrender.com/api/logout', {
+        
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                user_session
+            })
+        })
+    
+        const json = await res.json()
+        console.log(json)
+        let result = json['response_code']
+        console.log(result)
+        if (result == 200) {
+            window.location.href = '/main';
+        }
+	}
+
+    export async function add_bucket (product_id) {
+        const res = await fetch('https://gg1-back.onrender.com/api/add_bucket', {
+        
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                user_id,
+                product_id
+            })
+        })
+    
+        const json = await res.json()
+        console.log(json)
+        // result = json['response_code']
+        // console.log(result)
+        // if (result == 200) {
+        //     window.location.href = '/main';
+        // }
+	}
 </script>
 
 <main>
@@ -32,38 +88,33 @@
                     <div class="col-md-3 clearfix">
                         <div class="header-ctn">
                             <!-- КОРЗИНА -->
-                            <div class="dropdown">
+                            <!-- <div class="dropdown">
                                 <a href="/" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                                     <a href="/bucket" class="btn btn-entrance"><i class="fa fa-shopping-cart"></i>
                                         <span>Корзина</span>
                                         </a>
-                                        <!--<div class="qty">0</div>-->
                                 </a>
-                                <div class="cart-dropdown">
-                                    <div class="cart-list">
-                                        <!--<div class="product-widget" th:each="detail : ${bucket.bucketDetails}">
-                                            <div class="product-img">
-                                                <img th:src="${detail.image_url}" alt="">
-                                            </div>
-                                            <div class="product-body">
-                                                <h3 class="product-name"><a href="#" th:text="${detail.title}">YAMAHA F310</a></h3>
-                                                <h4 class="product-price" th:text="${detail.price}">₽13.500</h4>
-                                                <span class="qty"><span th:text="${detail.amount}"></span>x</span>
-                                            </div>-->
-                                    </div>
-    
-                                    <div class="cart-summary">
-                                        <div class="itogo"><h5>ИТОГО:</h5></div>
-                                        <div class="fullprice"></div>
-                                    </div>
-    
-                                    <div class="cart-btns">
-                                        <a href="/">Оплатить  <i class="fa fa-arrow-circle-right"></i></a>
-                                    </div>
-                                </div>
-                            </div>
+                            </div> -->
                             <!-- /КОРЗИНА -->
-    
+                            {#if code_response == 200}
+                            <div class="dropdown">
+                                <a href="/bucket" class="header-a-right">
+                                    <span class="right-header">Корзина</span>
+                                </a>
+                            </div>
+                            <div class="dropdown">
+                                <a href="/main" class="header-a-right" on:click={logout}>
+                                    <span class="right-header">Выйти</span>
+                                </a>
+
+                            </div>
+                            {:else}
+                            <div class="dropdown">
+                                <a href="/login" class="header-a-right">
+                                    <span class="right-header">Войти</span>
+                                </a>
+                            </div>
+                            {/if}
                         <!-- <div>
                             <div class="nav-item dropdown">
                                 <a sec:authorize="isAuthenticated()" class="btn btn-entrance dropdown-toggle" id="upp" data-toggle="dropdown" aria-expanded="true">
@@ -82,15 +133,6 @@
                                 <span>Войти</span>
                             </a>
                         </div> -->
-    
-                        <!-- МЕНЮ -->
-                            <div class="menu-toggle">
-                                <a href="/">
-                                    <i class="fa fa-bars"></i>
-                                    <span>Меню</span>
-                                </a>
-                            </div>
-                            <!-- /МЕНЮ -->
                         </div>
                     </div>
                 </div>
@@ -114,9 +156,9 @@
               </ul>
           </div>
         </div>
-      </nav>
-      <slot/>
-      <footer id="footer">
+    </nav>
+    <slot/>
+    <footer id="footer">
         <div class="section">
             <!-- БЛОК -->
             <div class="container">
@@ -220,6 +262,15 @@ header {
   width: 100%;
 }
 
+.header-a-right{
+    padding-top: 10px;
+}
+
+.right-header{
+    color:orange;
+    font-size: 15px;
+}
+
 footer {
         background: #15161D;
         color: #B9BABC;
@@ -227,30 +278,30 @@ footer {
         margin-right: -1%; 
         height: 200px; 
         display: flex;
-    }
+}
 
-    .footer {
-        padding-left: 30%;
-        margin-top: -2%;
-    }
+.footer {
+    padding-left: 30%;
+    margin-top: -2%;
+}
 
-    .footer .footer-title {
-        /* padding-top: 10px; */
-        color: #FFF;
-        text-transform: uppercase;
-        font-size: 18px;
-        margin: 0px 0px 10px;
-    }
+.footer .footer-title {
+    /* padding-top: 10px; */
+    color: #FFF;
+    text-transform: uppercase;
+    font-size: 18px;
+    margin: 0px 0px 10px;
+}
 
-    .footer-links li+li {
-        margin-top: 10px;
-    }
+.footer-links li+li {
+    margin-top: 10px;
+}
 
-    .footer-links li a {
-        color: #B9BABC;
-    }
+.footer-links li a {
+    color: #B9BABC;
+}
 
-    .footer-links li a:hover {
-        color: #D10024;
-    }
+.footer-links li a:hover {
+    color: #D10024;
+}
 </style>

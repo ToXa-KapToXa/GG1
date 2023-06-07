@@ -12,25 +12,24 @@
                     <!-- ЛОГО -->
                     <div class="col-md-3">
                         <div class="header-logo">
-                            <a href="/" class="logo">
+                            <a href="/main" class="logo">
                                 <img src="./logo.png" alt="">
                             </a>
                         </div>
                     </div>
                     <!-- /ЛОГО -->
-    
-    
+
+                    <div class="col-md-6">
+                    </div>
+
                     <div class="col-md-3 clearfix">
                         <div class="header-ctn">
     
-                            <!-- МЕНЮ -->
-                            <div class="menu-toggle">
-                                <a href="#">
-                                    <i class="fa fa-bars"></i>
-                                    <span>Меню</span>
+                            <div class="dropdown">
+                                <a href="/main" class="header-a-right">
+                                    <span class="right-header">Главная</span>
                                 </a>
                             </div>
-                            <!-- /МЕНЮ -->
                         </div>
                     </div>
                 </div>
@@ -98,6 +97,15 @@ header {
 .header-logo .logo img {
     display: block;
     height: 70px;
+}
+
+.header-a-right{
+    padding-top: 10px;
+}
+
+.right-header{
+    color:orange;
+    font-size: 15px;
 }
 
 footer {

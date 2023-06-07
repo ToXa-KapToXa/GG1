@@ -1,6 +1,6 @@
 <script>
     import { onMount } from "svelte";
-    const url = "http://localhost:1122/api/product/category/Шкаф"
+    const url = "https://gg1-back.onrender.com/api/product/category/Locker"
     export let Products = [];
 
     onMount(async function () {
@@ -13,7 +13,7 @@
 </script>
 
 <main>
-    <h3>Кресла</h3>
+    <h3>Шкафы</h3>
     <div class="product1">
         {#each Products as product}
         <div class="product">

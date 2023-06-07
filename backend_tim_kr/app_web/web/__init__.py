@@ -1,12 +1,14 @@
+import logging
 from flask import Flask, make_response, jsonify
 from flask_cors import CORS
+from typing import Union
 
 from .database.db_operator import DBOperator
 from .handlers.user_operator import UserOperator
 
-logger = None
-db_operator = None
-user_admin = None
+logger: Union[logging.Logger, None] = None
+db_operator: Union[DBOperator, None] = None
+user_admin: Union[UserOperator, None] = None
 
 
 def create_api(flask_log: bool,

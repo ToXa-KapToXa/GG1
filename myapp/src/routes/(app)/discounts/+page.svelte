@@ -1,6 +1,6 @@
 <script>
     import { onMount } from "svelte";
-    const url = "http://localhost:1122/api/product/sale"
+    const url = "https://gg1-back.onrender.com/api/product/sale"
     export let Products = [];
 
     onMount(async function () {

@@ -40,10 +40,11 @@ def auth():
             response_json['detail'] = "Неверно указан логин или пароль!"
             return make_response(jsonify(response_json), response_json['response_code'])
 
-        user_admin.add_session(user_session=coming_json['user_session'],
-                               user_id=user_id)
+        user_session = user_admin.add_session(user_id=user_id)
+        response_json = JSON_SUCCESS_POST.copy()
+        response_json['session'] = user_session
 
-        return make_response(jsonify(JSON_SUCCESS_POST), JSON_SUCCESS_POST['response_code'])
+        return make_response(jsonify(response_json), response_json['response_code'])
     except Exception as e:
         logger.error(LOG_ERROR.format(FUNC='api/auth method handler', ERROR=str(e)))
         logger.debug(LOG_ERROR_DETAILS.format(ERROR=traceback.format_exc()))

@@ -46,6 +46,7 @@ class DBOperator:
         response_json = {"product": []}
         for i in list_product:
             response_json['product'].append({
+                "product_id": i.id,
                 "name": i.name,
                 "price": i.price,
                 "category": i.category,
@@ -63,6 +64,7 @@ class DBOperator:
         response_json = {"product": []}
         for i in list_product:
             response_json['product'].append({
+                "product_id": i.id,
                 "name": i.name,
                 "price": i.price,
                 "category": i.category,
@@ -80,6 +82,7 @@ class DBOperator:
         response_json = {"product": []}
         for i in list_product:
             response_json['product'].append({
+                "product_id": i.id,
                 "name": i.name,
                 "price": i.price,
                 "category": i.category,
@@ -97,6 +100,7 @@ class DBOperator:
         response_json = {"product": []}
         for i in list_product:
             response_json['product'].append({
+                "product_id": i.id,
                 "name": i.name,
                 "price": i.price,
                 "category": i.category,
@@ -114,6 +118,7 @@ class DBOperator:
         response_json = {"product": []}
         for i in list_product:
             response_json['product'].append({
+                "product_id": i.id,
                 "name": i.name,
                 "price": i.price,
                 "category": i.category,

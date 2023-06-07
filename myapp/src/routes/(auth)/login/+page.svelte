@@ -1,53 +1,64 @@
 <script>
+
     let email = ""
     let password = ""
+    let user_session = "22"
     export let result = null
     async function auth () {
-        console.log(email)
-        console.log(password)
-		const res = await fetch('http://localhost:1122/api/auth', {
-			method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-                // like application/json or text/xml
-            },
-			body: JSON.stringify({
-				email,
-                password
-			})
-		})
+        if (email != "" && password != "") {
+            const res = await fetch('https://gg1-back.onrender.com/api/auth', {
+            
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email,
+                    password,
+                    user_session
+                })
+		    })
 		
-		const json = await res.json()
-        console.log(json)
-        result = json['response_code']
-        console.log(result)
-        if (result == 200) {
-            window.location.href = '/main';
+            const json = await res.json()
+            console.log(json)
+            result = json['response_code']
+            console.log(result)
+            if (result == 200) {
+                localStorage.setItem("token", "salam")
+                window.location.href = '/main';
+            }
+        }
+		else {
+            result = 401
         }
 	}
 </script>
 
 <main>
+
     <!--Form-->
     <div class="wr">
         <div class="wrapper">
-            <!-- error message -->
-            <!-- <div th:if="${param.error}">
-                <div class="alert alert-danger">Неверный email или пароль.</div>
+
+            {#if result == 400}
+            <div>
+                <div class="alert alert-danger">Неверный email или пароль!</div>
             </div>
-     -->
-            <!-- logout message -->
-            <!-- <div th:if="${param.logout}">
-                <div class="alert alert-info">Вы вышли из аккаунта!</div>
-            </div> -->
+            {/if}
+
+            {#if result == 401}
+            <div>
+                <div class="alert alert-danger">Заполните все поля!</div>
+            </div>
+            {/if}
     
-            <form href="/login" method="post">
+            <form>
                 <h2 class="in">Вход</h2>
                 <div class="heading-line" style="margin-bottom: 30px; margin-top: -3px"></div>
     
                 <div class="field email">
                     <div class="input-area">
-                        <input type="text" id ="username" bind:value={email} name = "username" placeholder="email" autofocus="autofocus">
+                        <input type="text" id ="username" bind:value={email} name = "username" placeholder="Email" autofocus="autofocus">
                         <i class="fa fa-user" id="loginEmail"></i>
                         <i class="error error-icon fas fa-exclamation-circle"></i>
                     </div>
@@ -63,7 +74,7 @@
     
                 <div>
                     <button type="submit" name="login-submit" id="login-submit" on:click={auth}
-                            class="form-control btn btn-primary" style="background: #9e8a78; border-color: #9e8a78;"><a href="/login">Войти</a></button>
+                            class="form-control btn btn-primary" style="background: #9e8a78; border-color: #9e8a78;">Войти</button>
                 </div>
                 <div>
                     <span class="spann">Нет аккаунта? <a style="color: #9e8a78" href="/registration">Зарегистрируйтесь.</a></span>
@@ -72,6 +83,7 @@
         </div>
     </div>
     <!--Form-->
+
 </main>
 
 <style>

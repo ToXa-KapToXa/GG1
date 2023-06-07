@@ -1,10 +1,13 @@
 <script>
+    
     let email = ""
     let password = ""
     let second_password = ""
     export let result = null
     async function registration () {
-		const res = await fetch('http://localhost:1122/api/registration/', {
+
+        if (email != "" && password != "" && second_password != "") {
+            const res = await fetch('https://gg1-back.onrender.com/api/registration', {
 			method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -19,6 +22,11 @@
 		
 		const json = await res.json()
         result = json['response_code']
+    }
+    else {
+        result = 401
+    }
+		
 	}
 </script>
 
@@ -26,14 +34,26 @@
 <!--Form-->
 <div class="wr">
     <div class="wrapper">
+
         {#if result == 200}
         <div>
-            <div class="alert alert-info">Вы успешно зарегистрировались!</div>
+            <div class="alert alert-success">Вы успешно зарегистрировались!</div>
         </div>
         {/if}
+        {#if result == 400}
+        <div>
+            <div class="alert alert-danger">Аккаунт с такой почтой уже зарегистрирован!</div>
+        </div>
+        {/if}
+        {#if result == 401}
+        <div>
+            <div class="alert alert-danger">Заполните все поля!</div>
+        </div>
+        {/if}
+
         <h2 class="in">Регистрация</h2>
         <div class="heading-line"></div>
-        <form href="/registration" method="post">
+        <form>
 
             <div class="field email">
                 <div class="input-area">
@@ -61,7 +81,7 @@
             </div>
 
             <div>
-                <button type="submit" class="form-control btn btn-success" style="background: #9e8a78; border-color: #9e8a78;" on:click={registration}><a href="/registration">Зарегистрироваться</a></button>
+                <button type="submit" class="form-control btn btn-success" style="background: #9e8a78; border-color: #9e8a78;" on:click={registration}>Зарегистрироваться</button>
             </div>
             <div>
                 <span  class="spann">Уже зарегистрированы? <a style="color: #9e8a78" href="/login">Войдите в аккаунт</a></span>
